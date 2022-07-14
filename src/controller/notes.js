@@ -160,6 +160,36 @@ const setNotesArchived = async (req, res = response) => {
     }
 };
 
+const setNotesUnarchived = async (req, res = response) => {
+    const { idNote } = req.params;
+    try {
+        const [updateRows] = await noteModel.update({
+            isArchived: false
+        }, {
+            where: {
+                idNote: idNote
+            }
+        });
+
+        if (updateRows === 0)
+            return res.status(404).json({
+                success: false,
+                message: 'Note not found'
+            });
+
+        return res.status(200).json({
+            success: true,
+            message: 'Note unarchived successfully'
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+}
+
 const getNotesArchived = async (req, res = response) => {
     try {
         const notes = await noteModel.findAll({
@@ -196,6 +226,7 @@ module.exports = {
     updateNote,
     deleteNote,
     setNotesArchived,
+    setNotesUnarchived,
     getNotesArchived,
     getNotesByCategory
 }

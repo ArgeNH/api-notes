@@ -8,7 +8,8 @@ const {
     updateNote,
     getNotesArchived,
     getNotesByCategory,
-    setNotesArchived
+    setNotesArchived,
+    setNotesUnarchived
 } = require('../controller/notes');
 const { validate } = require('../middlewares/validator');
 
@@ -21,6 +22,7 @@ router.delete('/delete-note/:idNote', deleteNote); //✅
 router.patch('/update-note/:idNote', updateNote);  //✅
 
 router.patch('/set-notes-archived/:idNote', setNotesArchived); //✅
+router.patch('/set-notes-unarchived/:idNote', setNotesUnarchived); //✅
 
 router.get('/archived/notes', getNotesArchived); //✅
 router.get('/category/notes', getNotesByCategory);
