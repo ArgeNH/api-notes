@@ -1,20 +1,23 @@
-const Sequelize = require('sequelize');
+const { DataTypes } = require('sequelize');
 const sequelize = require("../database/dbConnection");
 
-const categoryModel = sequelize.define("category", {
-    idCategory: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-        allowNull: false,
-        unique: true
+const categoryModel = sequelize.define("category",
+    {
+        idCategory: {
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+            allowNull: false,
+            unique: true
+        },
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
     },
-    name: {
-        type: Sequelize.STRING,
-        allowNull: false
+    {
+        timestamps: false
     }
-});
-
-sequelize.sync();
+);
 
 module.exports = categoryModel;
