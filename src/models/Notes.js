@@ -17,6 +17,11 @@ const noteModel = sequelize.define("note",
         content: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+        isArchived: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
         }
     },
     {
