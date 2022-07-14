@@ -22,7 +22,7 @@ app.use('/api/category', require('./src/routes/category'));
 //Start server
 app.listen(app.get('port'), () => {
     console.log(`Server in listen in PORT ${app.get('port')}`);
-    sequelize.sync({ force: true })
+    sequelize.sync({ force: false })
         .then(() => {
             console.log(`Database sync and conected`);
         })

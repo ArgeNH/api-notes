@@ -18,7 +18,7 @@ router.get('/', getNotes); //✅
 router.get('/:idNote', getNote); //✅
 router.post('/new-note', createNote); //✅
 router.delete('/delete-note/:idNote', deleteNote); //✅
-router.patch('/update-note/:idNote', updateNote); 
+router.patch('/update-note/:idNote', updateNote);  //✅
 
 router.patch('/set-notes-archived/:idNote', setNotesArchived); //✅
 

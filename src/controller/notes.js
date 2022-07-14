@@ -69,7 +69,38 @@ const getNote = async (req, res = response) => {
     }
 };
 
-const updateNote = async (req, res = response) => { };
+const updateNote = async (req, res = response) => {
+    const { idNote } = req.params;
+    const { title, content, category } = req.body;
+    try {
+        const [updateRows] = await noteModel.update({
+            title,
+            content,
+            category
+        }, {
+            where: {
+                idNote: idNote
+            }
+        });
+
+        if (updateRows === 0)
+            return res.status(404).json({
+                success: false,
+                message: 'Note not found'
+            });
+
+        return res.status(200).json({
+            success: true,
+            message: 'Note updated successfully'
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
 
 const deleteNote = async (req, res = response) => {
     const { idNote } = req.params;
@@ -129,7 +160,7 @@ const setNotesArchived = async (req, res = response) => {
     }
 };
 
-const getNotesArchived = async (req, res = response) => { 
+const getNotesArchived = async (req, res = response) => {
     try {
         const notes = await noteModel.findAll({
             where: {
