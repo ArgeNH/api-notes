@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const sequelize = require('./src/database/dbConnection');
 require('dotenv').config();
 
 const app = express();
@@ -12,8 +13,19 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//Routes
+//Conexion de base de datos
+sequelize.authenticate()
+    .then(() => {
+        console.log(`Connected to database`);
+    })
+    .catch(err => {
+        console.log(`Error to conect Database: ${err.message}`);
+    });
 
+//Routes
+app.use('/api/notes', require('./src/routes/notes'));
+app.use('/api/auth', require('./src/routes/auth'));
+app.use('/api/category', require('./src/routes/category'));
 
 //Start server
 app.listen(app.get('port'), () => {
