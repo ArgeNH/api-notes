@@ -24,7 +24,11 @@ const createNote = async (req, res = response) => {
 
 const getNotes = async (req, res = response) => {
     try {
-        const notes = await noteModel.findAll();
+        const notes = await noteModel.findAll({
+            where: {
+                isArchived: false
+            }
+        });
 
         if (notes.length === 0)
             return res.status(204).json({

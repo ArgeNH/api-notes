@@ -1,7 +1,8 @@
 const categoryModel = require('../models/Category');
+const notecategory = require('../models/notecategory');
 const noteModel = require('../models/Notes');
 const userModel = require('../models/User');
 
-noteModel.belongsToMany(categoryModel, { through: 'NoteCategory' }, { timestamp: false });
+noteModel.belongsToMany(categoryModel, { through: 'notecategory' });
 
-categoryModel.belongsToMany(noteModel, { through: 'NoteCategory' }, { timestamp: false });
+categoryModel.belongsToMany(noteModel, { through: 'notecategory' });
