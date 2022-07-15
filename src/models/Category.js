@@ -14,9 +14,6 @@ const categoryModel = sequelize.define("category",
             type: DataTypes.STRING,
             allowNull: false
         },
-    },
-    {
-        timestamps: false
     }
 );
 

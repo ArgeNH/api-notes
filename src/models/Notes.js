@@ -23,9 +23,6 @@ const noteModel = sequelize.define("note",
             allowNull: false,
             defaultValue: false
         }
-    },
-    {
-        timestamps: false
     }
 );
 
