@@ -6,7 +6,7 @@ const getCategories = async (req, res) => {
         const categories = await categoryModel.findAll();
 
         if (categories.length === 0)
-            return res.status(204).json({
+            return res.status(400).json({
                 success: false,
                 message: 'Categories is empty'
             });
@@ -46,7 +46,7 @@ const deleteCategory = async (req, res) => {
     try {
         const category = await categoryModel.findByPk(idCategory);
         if (!category)
-            return res.status(404).json({
+            return res.status(400).json({
                 success: false,
                 message: 'Category not found'
             });

@@ -31,7 +31,7 @@ const getNotes = async (req, res = response) => {
         });
 
         if (notes.length === 0)
-            return res.status(204).json({
+            return res.status(400).json({
                 success: false,
                 message: 'Notes is empty'
             });
@@ -55,7 +55,7 @@ const getNote = async (req, res = response) => {
         const note = await noteModel.findByPk(idNote);
 
         if (!note)
-            return res.status(404).json({
+            return res.status(400).json({
                 success: false,
                 message: 'Note not found'
             });
@@ -88,7 +88,7 @@ const updateNote = async (req, res = response) => {
         });
 
         if (updateRows === 0)
-            return res.status(404).json({
+            return res.status(400).json({
                 success: false,
                 message: 'Note not found'
             });
@@ -116,7 +116,7 @@ const deleteNote = async (req, res = response) => {
         });
 
         if (result === 0) {
-            return res.status(404).json({
+            return res.status(400).json({
                 success: false,
                 message: 'Note not found'
             });
@@ -146,7 +146,7 @@ const setNotesArchived = async (req, res = response) => {
         });
 
         if (updateRows === 0)
-            return res.status(404).json({
+            return res.status(400).json({
                 success: false,
                 message: 'Note not found'
             });
@@ -176,7 +176,7 @@ const setNotesUnarchived = async (req, res = response) => {
         });
 
         if (updateRows === 0)
-            return res.status(404).json({
+            return res.status(400).json({
                 success: false,
                 message: 'Note not found'
             });
@@ -203,7 +203,7 @@ const getNotesArchived = async (req, res = response) => {
         });
 
         if (notes.length === 0)
-            return res.status(204).json({
+            return res.status(400).json({
                 success: false,
                 message: 'Notes is empty'
             });
