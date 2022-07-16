@@ -32,6 +32,6 @@ router.patch('/set-notes-archived/:idNote', setNotesArchived); //✅
 router.patch('/set-notes-unarchived/:idNote', setNotesUnarchived); //✅
 
 router.get('/archived/notes', getNotesArchived); //✅
-router.get('/category/notes', getNotesByCategory);
+router.get('/category/notes/:idCategory', getNotesByCategory); //✅
 
 module.exports = router;

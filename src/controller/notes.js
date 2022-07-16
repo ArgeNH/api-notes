@@ -1,14 +1,27 @@
 const { response } = require('express');
+
+const notecategory = require('../models/notecategory');
 const noteModel = require('../models/Notes');
+const categoryModel = require('../models/Category');
 
 const createNote = async (req, res = response) => {
     const { title, content, category } = req.body;
     try {
-        await noteModel.create({
+        const noteCreate = await noteModel.create({
             title,
-            content,
-            category
+            content
         });
+
+        const { idNote } = noteCreate;
+
+        if (category !== undefined) {
+            for (let i = 0; i < category.length; i++) {
+                await notecategory.create({
+                    noteIdNote: idNote,
+                    categoryIdCategory: category[i]
+                });
+            }
+        }
 
         return res.status(201).json({
             success: true,
@@ -27,7 +40,14 @@ const getNotes = async (req, res = response) => {
         const notes = await noteModel.findAll({
             where: {
                 isArchived: false
-            }
+            },
+            include: [{
+                model: categoryModel,
+                attributes: ['name'],
+                through: {
+                    attributes: ['noteIdNote', 'categoryIdCategory'],
+                }
+            }]
         });
 
         if (notes.length === 0)
@@ -199,7 +219,14 @@ const getNotesArchived = async (req, res = response) => {
         const notes = await noteModel.findAll({
             where: {
                 isArchived: true
-            }
+            },
+            include: [{
+                model: categoryModel,
+                attributes: ['name'],
+                through: {
+                    attributes: ['noteIdNote', 'categoryIdCategory'],
+                }
+            }]
         });
 
         if (notes.length === 0)
@@ -221,7 +248,33 @@ const getNotesArchived = async (req, res = response) => {
     }
 };
 
-const getNotesByCategory = async (req, res = response) => { };
+const getNotesByCategory = async (req, res = response) => {
+    const { idCategory } = req.params;
+    try {
+        const category = await categoryModel.findByPk(idCategory, {
+            include: [{
+                model: noteModel,
+                attributes: ['idNote', 'title', 'content', 'createdAt', 'updatedAt', 'isArchived'],
+                through: {
+                    attributes: ['noteIdNote', 'categoryIdCategory'],
+                },
+                where: {
+                    isArchived: false
+                }
+            }]
+        });
+        return res.status(200).json({
+            success: true,
+            data: category
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
 
 module.exports = {
     createNote,
