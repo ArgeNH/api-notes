@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const { check } = require('express-validator');
 
 const {
     createNote,
@@ -17,9 +18,15 @@ const router = Router();
 
 router.get('/', getNotes); //✅
 router.get('/:idNote', getNote); //✅
-router.post('/new-note', createNote); //✅
+router.post('/new-note', [
+    check('title').not().isEmpty().withMessage('Title is required'),
+    check('content').not().isEmpty().withMessage('Content is required')
+    , validate], createNote); //✅
 router.delete('/delete-note/:idNote', deleteNote); //✅
-router.patch('/update-note/:idNote', updateNote);  //✅
+router.patch('/update-note/:idNote', [
+    check('title').not().isEmpty().withMessage('Title is required'),
+    check('content').not().isEmpty().withMessage('Content is required')
+    , validate], updateNote);  //✅
 
 router.patch('/set-notes-archived/:idNote', setNotesArchived); //✅
 router.patch('/set-notes-unarchived/:idNote', setNotesUnarchived); //✅
