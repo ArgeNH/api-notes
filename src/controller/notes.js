@@ -276,6 +276,31 @@ const getNotesByCategory = async (req, res = response) => {
     }
 };
 
+
+const deleteOneNoteCategory = async (req, res = response) => {
+    const { idNote, idCategory } = req.params;
+    try {
+        console.log(idNote, idCategory)
+        await notecategory.destroy({
+            where: {
+                noteIdNote: idNote,
+                categoryIdCategory: idCategory
+            }
+        });
+
+        return res.status(200).json({
+            success: true,
+            message: 'Category in note has been deleted successfully'
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
+}
+
 module.exports = {
     createNote,
     getNotes,
@@ -285,5 +310,6 @@ module.exports = {
     setNotesArchived,
     setNotesUnarchived,
     getNotesArchived,
-    getNotesByCategory
+    getNotesByCategory,
+    deleteOneNoteCategory
 }

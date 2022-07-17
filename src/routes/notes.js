@@ -10,7 +10,8 @@ const {
     getNotesArchived,
     getNotesByCategory,
     setNotesArchived,
-    setNotesUnarchived
+    setNotesUnarchived,
+    deleteOneNoteCategory
 } = require('../controller/notes');
 const { validate } = require('../middlewares/validator');
 
@@ -33,5 +34,6 @@ router.patch('/set-notes-unarchived/:idNote', setNotesUnarchived); //✅
 
 router.get('/archived/notes', getNotesArchived); //✅
 router.get('/category/notes/:idCategory', getNotesByCategory); //✅
+router.patch('/delete-note-category/:idNote/:idCategory', deleteOneNoteCategory); //✅
 
 module.exports = router;
